@@ -1,0 +1,356 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link href="assets/images/favicon.png" rel="icon" type="image/png">
+
+    <!-- Basic Page Needs
+        ================================================== -->
+    <title>Socialite Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Socialite is - Professional A unique and beautiful collection of UI elements">
+
+    <!-- icons
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
+    <!-- CSS 
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    
+</head>
+<body>
+ {% if request.GET.command == 'verification' %}
+
+  <div class="card mx-auto alert-info text-center p-7  font-bold" role="alert"
+    style="max-width: 1024px; background-color: skyblue; margin-top: 100px;">
+    Thank you for registering with us , We have sent you a verification email to your email address [{{
+    request.GET.email }}]
+    <br><br>
+    Already verified? <a href="{% url 'login' %}">Login</a>
+  </div>
+
+  {% else %}
+    <div class="lg:flex max-w-5xl min-h-screen mx-auto p-6 py-10">
+        <div class="flex flex-col items-center lg: lg:flex-row lg:space-x-10">
+            <div class="lg:mb-12 flex-1 lg:text-left text-center">
+                <img src="{% static 'images/logo.png' %}" alt="" class="lg:mx-0 lg:w-10 mx-auto w-10 h-27">
+                <p class="font-medium lg:mx-0 md:text-2xl mt-6 mx-auto sm:w-3/4 text-xl"> Connect with friends and the world around you on SocialHub.</p>
+            </div>
+            <div class="lg:mt-0 lg:w-96 md:w-1/2 sm:w-2/3 mt-10 w-full">
+                
+                <!-- Form Errors -->
+                {% if form.errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">{{form.errors}}</strong>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                      <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                    </span>
+                  </div> 
+                {% endif %}
+
+                {% if messages %}
+                    {% for message in messages %}
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong class="font-bold">{{message}}</strong>
+                                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                                <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                                </span>
+                            </div> 
+                    {% endfor %}
+                {% endif %}
+
+                <form class="p-6 space-y-4 relative bg-white shadow-lg rounded-lg" method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group mb-5">
+          <input type="email" class="form-control font-bold text-gray-900" placeholder="Email Address" name="email">
+        </div> <!-- form-group// -->
+        <div class="form-group mb-7">
+          <input type="password" class="form-control font-bold text-gray-900" placeholder="Password" name="password">
+        </div>
+
+        <div class="form-group text-blue-900 font-bold">
+
+        </div>
+                    <button type="submit" class="bg-blue-600 font-semibold p-3 rounded-md text-center text-white w-full"> Log In </button>
+                    <a href="{% url 'forgotPassword' %}" class="text-blue-500 text-center block"> Forgot Password? </a>
+                    <hr class="pb-3.5">
+                    <div class="flex">
+                        <a href="#register" type="button" class="bg-green-600 hover:bg-green-500 hover:text-white font-semibold py-3 px-5 rounded-md text-center text-white mx-auto" uk-toggle>
+                            Create New Account
+                        </a>
+                    </div>
+                </form>
+
+                <div class="mt-8 text-center text-sm"> <a href="#" class="font-semibold hover:underline"> Create a Page </a> for a celebrity, band or business </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="register" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body rounded-xl shadow-2xl p-0 lg:w-5/12">
+            <button class="uk-modal-close-default p-3 bg-gray-100 rounded-full m-3" type="button" uk-close></button>
+            <div class="border-b px-7 py-5">
+                <div class="lg:text-2xl text-xl font-semibold mb-1"> Sign Up</div>
+                <div class="text-base text-gray-600"> It’s quick and easy.</div>
+            </div>
+            <form class="p-7 space-y-5" novalidate method="POST">
+                {% csrf_token %}
+
+                <div class="flex form-row mb-4 ">
+                    <div class="form-group mr-5 ">
+                        <label class="font-bold ">First name</label>
+                        {{ form.first_name }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group">
+                        <label class="font-bold ">Last name</label>
+                        {{ form.last_name }}
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row end.// -->
+                <div class="flex form-row mb-4">
+                    <div class="form-group mr-5">
+                        <label class="font-bold ">Email Address</label>
+                        {{ form.email }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group ">
+                        <label class="font-bold ">Phone Number</label>
+                        {{form.phone_number}}
+                    </div>
+                </div> <!-- form-row.// -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="font-bold">Create password</label>
+                        {{ form.password }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6 mb-7">
+                        <label class="font-bold ">Repeat password</label>
+                        {{ form.confirm_password }}
+                    </div> <!-- form-group end.// -->
+                </div>
+                {{ form.email.errors }}
+                {{ form.non_field_errors }}
+                <p class="text-xs text-gray-400 pt-3">By clicking Sign Up, you agree to our
+                    <a href="#" class="text-blue-500">Terms</a>,
+                    <a href="#">Data Policy</a> and
+                    <a href="#">Cookies Policy</a>. You may receive SMS Notifications from us and can opt out any time.
+                </p>
+                <div class="flex">
+                    <button type="submit" class="bg-blue-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
+                        Get Started
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+     {% endif %}
+
+    <!-- For Night mode -->
+    <script>
+        (function(window, document, undefined) {
+            'use strict';
+            if (!('localStorage' in window)) return;
+            var nightMode = localStorage.getItem('gmtNightMode');
+            if (nightMode) {
+                document.documentElement.className += ' night-mode';
+            }
+        })(window, document);
+
+        (function(window, document, undefined) {
+
+            'use strict';
+
+            // Feature test
+            if (!('localStorage' in window)) return;
+
+            // Get our newly insert toggle
+            var nightMode = document.querySelector('#night-mode');
+            if (!nightMode) return;
+
+            // When clicked, toggle night mode on or off
+            nightMode.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.documentElement.classList.toggle('dark');
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('gmtNightMode', true);
+                    return;
+                }
+                localStorage.removeItem('gmtNightMode');
+            }, false);
+
+        })(window, document);
+    </script>
+    <!-- Javascript
+    ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
+    <script src="{% static 'assets/js/uikit.js' %}"></script>
+    <script src="{% static 'assets/js/simplebar.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-select.min.js' %}"></script>
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+{% comment %} 
+<form class="p-7 space-y-5" novalidate method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="1p4vmxwF3Vd62bOudNxQsgkfmP0UzdM7xZtS2HOnFKVat7CbayV94EQjXipfk6OB">
+
+                <div class="flex form-row mb-4 ">
+                    <div class="form-group mr-5 ">
+                        <label class="font-bold bg-gray-400">First name</label>
+                        <input type="text" name="first_name" maxlength="50" placeholder="Enter First Name" class="w-full bg-gray-400 text-white placeholder-gray-400 rounded-md px-3 py-2" required id="id_first_name">
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group">
+                        <label class="font-bold ">Last name</label>
+                        <input type="text" name="last_name" maxlength="50" placeholder="Enter Last Name" class="w-full bg-gray-400 text-white placeholder-gray-400 rounded-md px-3 py-2" required id="id_last_name">
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row end.// -->
+                <div class="flex form-row mb-4">
+                    <div class="form-group mr-5">
+                        <label class="font-bold ">Email Address</label>
+                        <input type="email" name="email" maxlength="100" placeholder="Enter Email Address" class="w-full bg-gray-400 text-white placeholder-gray-400 rounded-md px-3 py-2" required id="id_email">
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group ">
+                        <label class="font-bold ">Phone Number</label>
+                        <input type="text" name="phone_number" maxlength="50" placeholder="Enter Phone Number" class="form-control bg-red-500" required id="id_phone_number">
+                    </div>
+                </div> <!-- form-row.// -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="font-bold">Create password</label>
+                        <input type="password" name="password" placeholder="Enter Password" class="w-full bg-gray-400 text-white placeholder-gray-400 rounded-md px-3 py-2" required id="id_password">
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6 mb-7">
+                        <label class="font-bold ">Repeat password</label>
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full bg-gray-400 text-white placeholder-gray-400 rounded-md px-3 py-2" required id="id_confirm_password">
+                    </div> <!-- form-group end.// -->
+                </div>
+                
+                
+                <p class="text-xs text-gray-400 pt-3">By clicking Sign Up, you agree to our
+                    <a href="#" class="text-blue-500">Terms</a>,
+                    <a href="#">Data Policy</a> and
+                    <a href="#">Cookies Policy</a>. You may receive SMS Notifications from us and can opt out any time.
+                </p>
+                <div class="flex">
+                    <button type="submit" class="bg-blue-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
+                        Get Started
+                    </button>
+                </div>
+            </form> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'partials/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<section class="section-content padding-y">
+
+    <div class="sm:mx-auto sm:w-full sm:max-w-md" style="margin-top:4rem;">
+        <img class="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow">
+        <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+            Create a new account
+        </h2>
+        <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+            Or
+            <a href="{% url 'login' %}"
+                class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                login to your account
+            </a>
+        </p>
+    </div>
+
+    <div class="card mx-auto p-5"
+        style="width: 40rem; margin-top:40px; box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+        <article class="card-body">
+
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+
+                <div class="flex form-row mb-4 ">
+                    <div class="form-group mr-5">
+                        <label class="font-bold text-gray-900">First name</label>
+                        {{ form.first_name }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group">
+                        <label class="font-bold text-gray-900">Last name</label>
+                        {{ form.last_name }}
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row end.// -->
+                <div class="flex form-row mb-4">
+                    <div class="form-group mr-5">
+                        <label class="font-bold text-gray-900">Email Address</label>
+                        {{ form.email }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group ">
+                        <label class="font-bold text-gray-900">Phone Number</label>
+                        {{ form.phone_number }}
+                    </div>
+                </div> <!-- form-row.// -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="font-bold text-gray-900">Create password</label>
+                        {{ form.password }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6 mb-7">
+                        <label class="font-bold text-gray-900">Repeat password</label>
+                        {{ form.confirm_password }}
+                    </div> <!-- form-group end.// -->
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Register </button>
+                </div> <!-- form-group// -->
+                {{ form.email.errors }}
+                {{ form.non_field_errors }}
+            </form>
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+    <br><br>
+</section>
+
+{% endblock %} {% endcomment %}
