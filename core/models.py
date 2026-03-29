@@ -329,7 +329,6 @@ class ChatMessage(models.Model):
         return mark_safe('<img src="/media/%s" width="50" height="50" object-fit:"cover" style="border-radius: 5px;" />' % (self.image))
     
     
-    
 class GroupChat(models.Model):
     name = models.CharField(max_length=1000)
     description = models.CharField(max_length=10000)

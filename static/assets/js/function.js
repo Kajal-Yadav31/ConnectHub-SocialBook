@@ -16,6 +16,8 @@ $(document).ready(function () {
 
         $.ajax({
             url: '/create-post/',
+
+
             type: 'POST',
             dataType: 'json',
             data: formData,
@@ -150,7 +152,7 @@ $(document).ready(function () {
 
 
 $(document).on("click", "#like-btn", function () {
-    let btn_val = $(this).attr("data-like-btn")
+    let btn_val = $(this).attr("data-like-btn") // gives the current post id
     console.log(btn_val);
 
     $.ajax({
@@ -198,7 +200,7 @@ $(document).on("click", "#comment-btn", function () {
             "comment": comment,
         },
         success: function (res) {
-
+            console.log(res)
             let newComment = '<div class="flex card shadow p-2" id="comment-div' + res.data.comment_id + '">\
                     <div class="w-10 h-10 rounded-full relative flex-shrink-0">\
                         <img src="' + res.data.profile_image + '" alt="" class="absolute h-full rounded-full w-full">\

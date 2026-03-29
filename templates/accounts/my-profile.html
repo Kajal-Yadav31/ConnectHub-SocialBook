@@ -348,18 +348,7 @@
                                         {% endif %}
                                         {% endfor %}
                                     </div>
-                                    <!-- <div class="dark:text-gray-100">
-                                                Liked by
-                                                
-                                                    {% for i in p.likes.all %}
-                                                    <strong>
-                                                        {% if forloop.first %}
-                                                            {{i.profile.full_name}}
-                                                        {% endif %}
-                                                    </strong> 
-                                                    {% endfor %}
-                                                    and <strong> <span id="like-count{{p.id}}">{{p.likes.all.count}}</span> Others </strong>
-                                            </div> -->
+                                   
                                     <div class="dark:text-gray-100">
                                         <strong><span id="like-count{{p.id}}">{{p.likes.all.count}}</span></strong>
                                         Likes
@@ -389,11 +378,11 @@
                                                 </div>
                                             </div>
                                             <div class="text-sm flex items-center space-x-3 mt-2 ml-5">
-                                                {% comment %} <a id="like-comment-btn" data-like-comment="{{c.id}}"
+                                                <a id="like-comment-btn" data-like-comment="{{c.id}}"
                                                     class="like-comment{{c.id}} text-red-500" {% if request.user in
                                                     c.likes.all %} style="color: red;" {% else %} style="color: gray;"
                                                     {% endif %}> <i id="comment-icon{{c.cid}}"
-                                                        class=" fas fa-heart  "></i></a> <small><span class="" {% endcomment %}
+                                                        class=" fas fa-heart  "></i></a> <small><span class="" 
                                                         id="comment-likes-count{{c.id}}">{{ c.likes.all.count
                                                         }}</span></small>
 
