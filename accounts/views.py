@@ -205,28 +205,26 @@ def friend_profile(request, username):
     return render(request, "accounts/friend-profile.html", context)
 
 
-# @login_required
-# def profile_update(request):
-#     if request.method == "POST":
-#         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-#         u_form = UserUpdateForm(request.POST, instance=request.user)
+@login_required
+def profile_update(request):
+    if request.method == "POST":
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        u_form = UserUpdateForm(request.POST, instance=request.user)
 
-#         if p_form.is_valid() and u_form.is_valid():
-#             p_form.save()
-#             u_form.save()
-#             messages.success(request, "Profile Updated Successfully.")
-#             return redirect('userauths:profile-update')
-#     else:
-#         p_form = ProfileUpdateForm(instance=request.user.profile)
-#         u_form = UserUpdateForm(instance=request.user)
+        if p_form.is_valid() and u_form.is_valid():
+            p_form.save()
+            u_form.save()
+            messages.success(request, "Profile Updated Successfully.")
+            return redirect('my-profile')
+        else:
+            print(p_form.errors)
+            print(u_form.errors)
+    else:
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+        u_form = UserUpdateForm(instance=request.user)
 
-#     context = {
-#         'p_form': p_form,
-#         'u_form': u_form,
-#     }
-#     return render(request, '
-# accounts/profile-update.html', context)
-
-
-
-# Inbox Functionality
+    context = {
+        'p_form': p_form,
+        'u_form': u_form,
+    }
+    return render(request, 'accounts/profile-update.html', context)

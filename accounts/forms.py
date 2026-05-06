@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Account, Profile
+from django.forms import ImageField, FileInput
 
 
 class ProfileForm(ModelForm):
@@ -45,3 +46,39 @@ class RegisterationForm(forms.ModelForm):
         self.fields['email'].widget.attrs['placeholder'] = 'Enter Email Address'
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    iimage = forms.ImageField(
+        widget=forms.FileInput(),
+        required=False
+    )
+
+    cover_image = forms.ImageField(
+        widget=forms.FileInput(),
+        required=False
+    )
+    
+    class Meta:
+        model = Profile
+        fields = [
+            'cover_image' ,
+            'image' ,
+            'full_name', 
+            'bio', 
+            'about_me', 
+            'phone',
+            'gender',
+            'relationship',
+            'friends_visibility',
+            'country', 
+            'city', 
+            'state', 
+            'address', 
+            'working_at',
+        ]
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['username', 'email']

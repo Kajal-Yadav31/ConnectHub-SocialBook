@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'taggit',
     'import_export',
     'channels',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -145,7 +146,7 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
         {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Company", "url": "/admin/addons/company/"},
-        {"name": "Users", "url": "/admin/userauths/user/"},
+        {"name": "Users", "url": "/admin/accounts/user/"},
     ],
 
     "order_with_respect_to": [
@@ -153,7 +154,7 @@ JAZZMIN_SETTINGS = {
         "core.post",
         "core.friend",
         "core.FriendRequest",
-        "userauths",
+        "accounts",
         "addon",
     ],
     
@@ -163,8 +164,8 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
 
-        "userauths.User": "fas fa-user",
-        "userauths.Profile":"fas fa-address-card",
+        "Accounts.User": "fas fa-user",
+        "Accounts.Profile":"fas fa-address-card",
 
         "core.post": "fas fa-th",
         "core.Page": "fas fa-users",

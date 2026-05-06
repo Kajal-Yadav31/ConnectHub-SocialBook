@@ -116,7 +116,6 @@ class Profile(models.Model):
     state = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=1000, null=True, blank=True)
     working_at = models.CharField(max_length=1000, null=True, blank=True)
-    whatsApp = models.CharField(default="+91 123456 789", max_length=100, blank=True, null=True)
     verified = models.BooleanField(default=False)
     followers = models.ManyToManyField(Account, blank=True, related_name="followers")
     followings = models.ManyToManyField(Account, blank=True, related_name="followings")

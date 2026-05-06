@@ -13,7 +13,6 @@ urlpatterns = [
     path('resetPassword/', views.resetPassword, name='resetPassword'),
     path('my-profile/', views.my_profile, name='my-profile'),
     path("profile/<username>/", views.friend_profile, name="profile"),
-
-    # path("profile-update/", views.profile_update, name="profile-update"),
+    path("profile-update/", views.profile_update, name="profile-update"),
 
 ]
