@@ -1,0 +1,86 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Main Contents -->
+<div class="main_content">
+
+    <span uk-toggle="target: .message-content;"
+        class="fixed left-0 top-36 bg-red-600 z-10 py-1 px-4 rounded-r-3xl text-white"> Users</span>
+
+    <div class="messages-container">
+        <div class="messages-container-inner">
+
+
+            <div class="messages-inbox">
+                <div class="messages-headline">
+                    <div class="input-with-icon" hidden>
+                        <input id="autocomplete-input" type="text" placeholder="Search">
+                        <i class="icon-material-outline-search"></i>
+                    </div>
+                    <h2 class="text-2xl font-semibold">Chats</h2>
+                    <span
+                        class="absolute icon-feather-edit mr-4 text-xl uk-position-center-right cursor-pointer"></span>
+                </div>
+                <div class="messages-inbox-inner" data-simplebar>
+                    <ul>
+
+                        {% for m in chat_message %}
+                        {% if request.user == m.sender %}
+                        <li>
+                            <a href="{% url 'inbox_detail' m.reciever.username %}">
+                                <div class="message-avatar"><i class="status-icon status-online"></i><img
+                                        src="{{m.reciever.profile.image.url}}" alt=""></div>
+
+                                <div class="message-by">
+                                    <div class="message-by-headline">
+                                        <h5>{{m.reciever.profile.full_name}}</h5>
+                                        <span>{{m.date|timesince}} ago</span>
+                                    </div>
+                                    <p>{{m.message|truncatechars:40}}</p>
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if request.user == m.reciever %}
+                        <li>
+                            <a href="{% url 'inbox_detail' m.sender.username %}">
+                                <div class="message-avatar"><i class="status-icon status-online"></i><img
+                                        src="{{m.sender.profile.image.url}}" alt=""></div>
+
+                                <div class="message-by">
+                                    <div class="message-by-headline">
+                                        <h5>{{m.sender.profile.full_name}}</h5>
+                                        <span>{{m.date|timesince}} ago</span>
+                                    </div>
+                                    <p>{{m.message|truncatechars:40}}</p>
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="message-content">
+
+                <div class="messages-headline">
+                    <h4> Start a new conversation</h4>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<!-- open chat box -->
+{% include 'partials/chatpage.html' %}
+
+{% endblock content %}

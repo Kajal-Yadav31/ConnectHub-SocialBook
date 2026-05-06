@@ -63,7 +63,7 @@ def login_user(request):
 
         if users is not None:
             login(request, users)
-            return redirect('index')
+            return redirect('feed')
 
         else:
             messages.error(request, 'Please! Enter correct email and password')
@@ -205,23 +205,28 @@ def friend_profile(request, username):
     return render(request, "accounts/friend-profile.html", context)
 
 
-@login_required
-def profile_update(request):
-    if request.method == "POST":
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        u_form = UserUpdateForm(request.POST, instance=request.user)
+# @login_required
+# def profile_update(request):
+#     if request.method == "POST":
+#         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+#         u_form = UserUpdateForm(request.POST, instance=request.user)
 
-        if p_form.is_valid() and u_form.is_valid():
-            p_form.save()
-            u_form.save()
-            messages.success(request, "Profile Updated Successfully.")
-            return redirect('userauths:profile-update')
-    else:
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-        u_form = UserUpdateForm(instance=request.user)
+#         if p_form.is_valid() and u_form.is_valid():
+#             p_form.save()
+#             u_form.save()
+#             messages.success(request, "Profile Updated Successfully.")
+#             return redirect('userauths:profile-update')
+#     else:
+#         p_form = ProfileUpdateForm(instance=request.user.profile)
+#         u_form = UserUpdateForm(instance=request.user)
 
-    context = {
-        'p_form': p_form,
-        'u_form': u_form,
-    }
-    return render(request, 'accounts/profile-update.html', context)
+#     context = {
+#         'p_form': p_form,
+#         'u_form': u_form,
+#     }
+#     return render(request, '
+# accounts/profile-update.html', context)
+
+
+
+# Inbox Functionality

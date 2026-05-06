@@ -2,11 +2,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('feed/', views.index, name="index"),
+    path('feed/', views.index, name="feed"),
     path('post/<slug:slug>/', views.post_detail, name="post-detail"),
 
 
     path("create-post/", views.create_post, name="create-post"),
+    path("get-post-data/", views.get_post_data, name="get-post-data/"),
+    path("edit-post/", views.edit_post, name="edit-post/"),
+    path("delete-post/", views.delete_post, name="delete-post"),
     path("like-post/", views.like_post, name="like-post"),
     path("comment-post/", views.comment_on_post, name="comment-post"),
     path("like-comment/", views.like_comment, name="like-comment"),
@@ -16,4 +19,8 @@ urlpatterns = [
     path("accept-friend-request/", views.accept_friend_request, name="accept-friend-request"),
     path("reject-friend-request/", views.reject_friend_request, name="reject-friend-request"),
     path("unfriend/", views.unfriend, name="unfriend"),
+     path("block-user/", views.block_user, name="block_user"),
+     
+    path("core/inbox/", views.inbox, name="inbox"),
+    path("core/inbox/<username>/", views.inbox_detail, name="inbox_detail"),
 ]

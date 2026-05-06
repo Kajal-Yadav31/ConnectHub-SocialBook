@@ -24,10 +24,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'import_export',
+    'channels',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -35,6 +37,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'SocialBook.urls'
 
@@ -49,6 +53,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processor.my_context_processor',
+                'core.context_processor.chat_users',
             ],
         },
     },
@@ -57,6 +62,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'SocialBook.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.Account'
+
+ASGI_APPLICATION = 'SocialBook.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 DATABASES = {
     'default': {
@@ -119,9 +132,9 @@ DEFAULT_FROM_EMAIL = 'SocialHub <django.connecthub@gmail.com>'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'index'
-LOGOUT_REDIRECT_URL = 'signup'
-LOGIN_URL = 'sign-up'
+LOGIN_REDIRECT_URL = 'feed'
+LOGOUT_REDIRECT_URL = 'register'
+LOGIN_URL = 'register'
 
 JAZZMIN_SETTINGS = {
     'site_header': "SocialHub Admin Panel",

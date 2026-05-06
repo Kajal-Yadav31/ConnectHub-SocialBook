@@ -20,3 +20,15 @@ def my_context_processor(request):
         "friend_request":friend_request,
          "notification":notification,
     }
+
+def chat_users(request):
+    if request.user.is_authenticated:
+        users = Account.objects.exclude(
+            username=request.user.username
+        )
+    else:
+        users = []
+
+    return {
+        "chat_users": users
+    }
