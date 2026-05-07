@@ -102,8 +102,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
 class Profile(models.Model):
     pid = ShortUUIDField(length=7, max_length=25, alphabet="abcdefghijklmnopqrstuvxyz123")
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
-    cover_image = models.ImageField(upload_to=user_directory_path, default="cover.jpg", blank=True)
-    image = models.ImageField(upload_to=user_directory_path, default="default.jpg", blank=True)
+    cover_image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
     full_name = models.CharField(max_length=1000, null=True, blank=True)
     bio = models.CharField(max_length=100, null=True, blank=True)
     about_me = models.CharField( max_length=1000,null=True, blank=True)

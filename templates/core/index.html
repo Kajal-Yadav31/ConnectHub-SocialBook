@@ -164,9 +164,9 @@
 
                             {% for f in request.user.profile.friends.all %}
 
-
-                            <a href="#">
+                            <a href="{% url 'profile' f.profile.user.username %}">
                                 <div class="contact-avatar">
+                               
                                     <img src="{{f.profile.image.url}}" alt="">
                                     <span class="user_status status_online"></span>
                                 </div>
@@ -175,14 +175,13 @@
                             <div uk-drop="pos: left-center ;animation: uk-animation-slide-left-small">
                                 <div class="contact-list-box">
                                     <div class="contact-avatar">
+                                    
                                         <img src="{{f.profile.image.url}}" alt="">
                                         <span class="user_status status_online"></span>
                                     </div>
-                                    <div class="contact-username"> {{f.profile.full_name}}</div>
-                                    <p>
-                                        <ion-icon name="people" class="text-lg mr-1"></ion-icon> Become friends with
-                                        <strong> Stella Johnson </strong> and <strong> 14 Others</strong>
-                                    </p>
+                                    <div class="contact-username">
+                                     {{f.profile.full_name}}</div>
+                                    
                                     <div class="contact-list-box-btns">
                                         <a href="{% url 'inbox_detail' f.username %}"
                                             class="button primary flex-1 block mr-2">

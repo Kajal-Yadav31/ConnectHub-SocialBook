@@ -23,4 +23,5 @@ urlpatterns = [
      
     path("core/inbox/", views.inbox, name="inbox"),
     path("core/inbox/<username>/", views.inbox_detail, name="inbox_detail"),
+    path("mark-notification-as-read/", views.mark_notification_as_read, name="mark_notification_as_read"),
 ]

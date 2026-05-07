@@ -58,7 +58,7 @@
             </ul>
         </nav>
         <div class="contact-list px-2 uk-switcher" id="chats-tab">
-        {% for user in chat_users %}
+        {% for user in users %}
             <div class="p-2 border-b">
 
                 <a href="{% url 'inbox_detail' username=user.username %}"
@@ -101,4 +101,4 @@
             </div>
 
     </div>
-</div>
+</div> 

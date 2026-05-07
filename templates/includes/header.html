@@ -3,16 +3,16 @@
     <div class="header_wrap">
         <div class="header_inner mcontainer">
             <div class="left_side">
-                <button class="slide_menu lg:hidden p-2" uk-toggle="target: #wrapper ; cls: is-active">
+                {% comment %} <button class="slide_menu lg:hidden p-2" uk-toggle="target: #wrapper ; cls: is-active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                         <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" />
                     </svg>
-                </button>
+                </button> {% endcomment %}
 
                 <div id="logo">
                     <div  class="flex gap-2">
                         <img src="{% static 'images/logo.png' %}" alt="">
-                         <a href="{% url 'feed' %}" class="font-bold text-white">SocialHub</a>
+                         <a href="{% url 'feed' %}" class="font-bold text-blue-600 dark:text-white hover:text-blue-600 dark:hover:text-white no-underline">SocialHub</a>
                     </div>
                 </div>
             </div>
@@ -84,8 +84,10 @@
 
                     <!-- Friend Request -->
                     <a href="#" class="is_icon" uk-tooltip="title: Friend Request">
-                        <i class="fas fa-user-plus text-gray-800"></i>
-                        <span class="text-white">{{ friend_request.count }}</span>
+                        <i class="fas fa-user-plus !text-gray-800 dark:!text-white"></i>
+                        <span class="text-white">
+                            {{ friend_request.count }}
+                        </span>
                     </a>
                     <div uk-drop="mode: click" class="header_dropdown">
                         <div class="dropdown_scrollbar" data-simplebar>
@@ -139,7 +141,7 @@
                     </div>
 
 
-                    <a href="#" class="is_icon" uk-tooltip="title: Notifications">
+                    <a href="#" id="notification-icon" class="is_icon" uk-tooltip="title: Notifications">
                         <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
@@ -286,7 +288,7 @@
 
                             </ul>
                         </div>
-                        <a href="#" class="see-all">All Chat Messages</a>
+                        <a href="{% url 'inbox' %}" class="see-all">All Chat Messages</a>
                         <a href="#" class="see-all">All Group Messages</a>
                     </div>
 
@@ -319,17 +321,9 @@
                             <i class="fas fa-user"></i>
                             My Account
                         </a>
-                        <a href="#">
+                        <a href="{% url 'profile-update' %}">
                             <i class="fas fa-cog"></i>
-                            Profile Settings
-                        </a>
-                        <a href="groups.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            Manage Pages
+                            Update Profile
                         </a>
                         <a href="#" id="night-mode" class="btn-night-mode">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -367,4 +361,29 @@
             </div>
         </div>
     </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const notificationIcon = document.getElementById("notification-icon");
+    const notificationCount = notificationIcon.querySelector("span");
+
+    if (notificationIcon) {
+        notificationIcon.addEventListener("click", function () {
+            fetch("{% url 'mark_notification_as_read' %}")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        notificationCount.innerText = "0";
+
+                        document.querySelectorAll(".not-read").forEach(item => {
+                            item.classList.remove("not-read");
+                        });
+                    }
+                });
+        });
+    }
+});
+
+
+</script>
 </header>

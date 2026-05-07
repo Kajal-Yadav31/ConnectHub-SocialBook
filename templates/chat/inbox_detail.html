@@ -29,7 +29,7 @@
                         {% if request.user == m.sender %}
                         <li>
                             <a href="{% url 'inbox_detail' m.reciever.username %}">
-                                <div class="message-avatar"><i class="status-icon status-online"></i><img
+                                <div class="message-avatar"><i class="status-icon status-online"></i><imgw
                                         src="{{m.reciever.profile.image.url}}" alt=""></div>
 
                                 <div class="message-by">
@@ -171,11 +171,8 @@
                 chatMessage += '</div>';
                 chatMessage += '<div class="clearfix"></div>';
                 chatMessage += '</div>';
-                // Append the chat message to the main div
                 $('#chat-messages').append(chatMessage);
-                // Get the chat container
                 var chatContainer = document.querySelector('.chat_container');
-                // Automatically scroll to the bottom of the message after sending.
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             } else {
                 var chatMessage = '<div class="message-bubble">';
@@ -216,11 +213,6 @@
         });
 
     });
-
-
-
-
-
     $(document).ready(function () {
         $(".chat_container").scrollTop(100000000000);
     });
@@ -231,15 +223,11 @@
     $(document).ready(function () {
         var chatInputValue = $('#chat-input');
         var sendButton = $('#send-btn');
-
-        // Disable the button initially
         sendButton.prop('disabled', true);
 
-        // Check input field on keyup event
         chatInputValue.on('keyup', function () {
             var inputText = $(this).val();
 
-            // Enable/disable button based on input field value
             if (inputText.trim() !== '') {
                 sendButton.prop('disabled', false);
             } else {

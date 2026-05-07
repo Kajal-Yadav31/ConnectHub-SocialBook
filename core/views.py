@@ -12,6 +12,11 @@ from django.db.models import Q, Count, Sum, F, FloatField
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.db.models import OuterRef, Subquery
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+
 # Notifications Keys
 noti_new_like = "New Like"
 noti_new_follower = "New Follower"
@@ -47,6 +52,17 @@ def send_notification(user, sender, post, comment, notification_type):
         notification_type=notification_type
     )
     return notification
+
+@login_required
+def mark_notification_as_read(request):
+    Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    ).update(is_read=True)
+
+    return JsonResponse({
+        "status": "success"
+    })
 
 @csrf_exempt
 def create_post(request):
@@ -97,8 +113,7 @@ def get_post_data(request):
             "error": "Post not found"
         }, status=404)
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+
 
 @csrf_exempt
 def edit_post(request):
@@ -377,7 +392,7 @@ def unfriend(request):
 
 @login_required
 def inbox(request):
-    user_id = request.user   
+    user_id = request.user
     chat_message = ChatMessage.objects.filter(     
         id__in =  Subquery(
             Account.objects.filter(
@@ -444,7 +459,7 @@ def inbox_detail(request, username):
     }
     return render(request, 'chat/inbox_detail.html', context)
 
-
+@login_required
 def block_user(request):
     id = request.GET['id']
     user = request.user
