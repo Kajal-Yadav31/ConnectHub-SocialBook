@@ -56,8 +56,12 @@
                             <!-- Column 1: Profile Image -->
                             <div class="bg-gray-100 p-4  flex items-center" style="border-radius: 10px;">
                                 <div class="relative">
-                                    <img src="{{request.user.profile.image.url}}" id="preview_avatar"
-                                        alt="Profile Picture" class="w-24 h-24 rounded-full">
+                                {% if request.user.profile.image %}
+                            <img src="{{request.user.profile.image.url}}" id="preview_avatar" alt="Profile Picture" class="w-24 h-24 rounded-full">
+                        {% else %}
+                            <img src="{% static 'images/user-default.jpg' %}" class="w-24 h-24 rounded-full" alt="">
+                        {% endif %}
+                                    
                                     <label for="id_image"
                                         class="absolute bottom-0 right-0 p-2 bg-white rounded-full cursor-pointer">
                                         <i class="fas fa-pen text-blue-500"></i>
@@ -69,8 +73,13 @@
                             <!-- Column 2: Cover Image -->
                             <div class="bg-blue-100 p-4" style="border-radius: 10px;">
                                 <div class="relative">
-                                    <img src="{{request.user.profile.cover_image.url}}" id="preview_cover"
+                                {% if request.user.profile.cover_image %}
+                            <img src="{{request.user.profile.cover_image.url}}" id="preview_cover"
                                         alt="Cover Image" class="w-full h-32 object-cover rounded-lg">
+                        {% else %}
+                            <img src="{% static 'images/default-cover.jpg' %}" class="w-full h-32 object-cover rounded-lg" alt="">
+                        {% endif %}
+                                    
                                     <label for="id_cover_image"
                                         class="absolute bottom-0 right-0 p-2 bg-white rounded-full cursor-pointer">
                                         <i class="fas fa-pen text-blue-500"></i>
@@ -154,10 +163,7 @@
                             {% render_field p_form.state class="line__input" %}
                             <span for="username" class="line__placeholder"> State </span>
                         </div>
-                        <div class="line">
-                            {% render_field p_form.country class="line__input" %}
-                            <span for="username" class="line__placeholder"> State </span>
-                        </div>
+                        
                     </div>
 
                     <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">

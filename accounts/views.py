@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegisterationForm
+from .forms import RegistrationForm
 from .models import Account, Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -26,7 +26,7 @@ from .tasks import email_send_task, ForgotPassword_send_task
 
 def register(request):
     if request.method == "POST":
-        form = RegisterationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -47,7 +47,7 @@ def register(request):
             return redirect('/accounts/register/?command=verification&email='+email)
 
     else:
-        form = RegisterationForm()
+        form = RegistrationForm()
     context = {
         'form': form,
     }

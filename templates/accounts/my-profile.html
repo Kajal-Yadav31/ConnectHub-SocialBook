@@ -83,7 +83,15 @@
                     <!-- create post  -->
                     <div class="card lg:mx-0 p-4" uk-toggle="target: #create-post-modal">
                         <div class="flex space-x-3">
+                                
+                            <a href="{% url 'profile' request.user.username %}">
+                        {% if request.user.profile.image %}
                             <img src="{{request.user.profile.image.url}}" class="w-10 h-10 rounded-full">
+                        {% else %}
+                            <img src="{% static 'images/user-default.jpg' %}" class="w-10 h-10 rounded-full" alt=""></a>
+                        {% endif %}
+                        
+                            
                             <input placeholder="What's On Your Mind? {{request.user.username}}"
                                 class="bg-gray-100 hover:bg-gray-200 flex-1 h-10 px-6 rounded-full">
                         </div>
@@ -126,9 +134,14 @@
                             <!-- post header-->
                             <div class="flex justify-between items-center lg:p-4 p-2.5">
                                 <div class="flex flex-1 items-center space-x-4">
-                                    <a href="#">
-                                        <img src="{{ p.user.profile.image.url }}" style="width: 40px; height: 40px;"
+                                    <a href="{% url 'profile' p.user.username %}">
+                                    {% if p.user.profile.image %}        
+                <img src="{{ p.user.profile.image.url }}" style="width: 40px; height: 40px;"
                                             class="bg-gray-200 border border-white rounded-full w-10 h-10">
+                {% else %}
+                <img src="{% static 'images/user-default.jpg' %}" class="bg-gray-200 border border-white rounded-full w-10 h-10" alt="">
+        {% endif %}
+                                        
                                     </a>
                                     <div class="flex-1 font-semibold capitalize">
                                         <a href="#" class="text-white dark:text-black-100">{{ p.user.profile.full_name }}</a>
@@ -707,7 +720,7 @@
             </div>
 
             <!-- Videos -->
-            <div class="card md:p-6 p-2 max-w-3xl mx-auto">
+            {% comment %} <div class="card md:p-6 p-2 max-w-3xl mx-auto">
 
                 <h2 class="text-xl font-semibold"> Friend</h2>
                 <nav class="responsive-nav border-b">
@@ -818,7 +831,7 @@
                         Load more ..</a>
                 </div>
 
-            </div>
+            </div> {% endcomment %}
 
 
         </div>
@@ -841,8 +854,14 @@
                     uk-tooltip="title: Close ; pos: bottom ;offset:7"></button>
             </div>
             <div class="flex flex-1 items-start space-x-4 p-5">
-                <img src="{{request.user.profile.image.url}}"
-                    class="bg-gray-200 border border-white rounded-full w-11 h-11">
+            <div >
+            {% if request.user.profile.image %}        
+            <a href="{% url 'profile' request.user.username %}">
+                <img src="{{request.user.profile.image.url}}" class="bg-gray-200 border border-white rounded-full w-11 h-11">
+                {% else %}
+                <img src="{% static 'images/user-default.jpg' %}" class="bg-gray-200 border border-white  rounded-full w-11 h-11" alt=""></a>
+        {% endif %}
+                </div>
                 <div class="flex-1 pt-2">
                     <textarea id="post-caption" name="post-caption"
                         class="uk-textare text-black shadow-none focus:shadow-none text-xl font-medium resize-none"

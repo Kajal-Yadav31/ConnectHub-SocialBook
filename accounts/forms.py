@@ -13,43 +13,67 @@ class ProfileForm(ModelForm):
         }
         widgets = {
             'image': forms.FileInput(),
-            'bio': forms.Textarea(attrs={'rows': 3})
+            'bio': forms.Textarea(attrs={
+                'rows': 3,
+                'class': 'border p-3 w-full rounded-md'
+            })
         }
 
 
-class RegisterationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Enter Password',
-        'class': 'form-control',
-    }))
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Confirm Password'
-    }))
+class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Create Password',
+            'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+        })
+    )
+
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Repeat Password',
+            'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+        })
+    )
 
     class Meta:
         model = Account
         fields = ['first_name', 'last_name', 'phone_number', 'email', 'password']
 
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'placeholder': 'Enter First Name',
+                'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+            }),
+
+            'last_name': forms.TextInput(attrs={
+                'placeholder': 'Enter Last Name',
+                'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Enter Email Address',
+                'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+            }),
+
+            'phone_number': forms.TextInput(attrs={
+                'placeholder': 'Enter Phone Number',
+                'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+            }),
+
+            
+        }
+
     def clean(self):
-        cleaned_data = super(RegisterationForm, self).clean()
+        cleaned_data = super(RegistrationForm, self).clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
 
         if password != confirm_password:
             raise forms.ValidationError("Password does not match!")
 
-    def __init__(self, *args, **kwargs):
-        super(RegisterationForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs['placeholder'] = 'Enter First Name'
-        self.fields['last_name'].widget.attrs['placeholder'] = 'Enter Last Name'
-        self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter Phone Number'
-        self.fields['email'].widget.attrs['placeholder'] = 'Enter Email Address'
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
-
 
 class ProfileUpdateForm(forms.ModelForm):
-    iimage = forms.ImageField(
+    image = forms.ImageField(
         widget=forms.FileInput(),
         required=False
     )
@@ -81,4 +105,4 @@ class ProfileUpdateForm(forms.ModelForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['username', 'email']
+        fields = ['email']

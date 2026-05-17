@@ -255,7 +255,7 @@
                                 {% for m in chat_message %}
                                 {% if request.user == m.sender %}
                                 <li class="un-read" style="overflow: hidden;">
-                                    <a href="{% url 'inbox_detail' m.reciever.username %}">
+                                    <a href="{% url 'inbox_detail' m.reciever.username|slugify %}">
                                         <div class="drop_avatar"> <img
                                                 style="object-fit: cover; width: 40px; height: 40px;"
                                                 src="{{m.reciever.profile.image.url}}" alt="">
