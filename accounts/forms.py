@@ -24,6 +24,7 @@ class RegistrationForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Create Password',
+            'autocomplete': 'new-password',
             'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
         })
     )
@@ -31,6 +32,7 @@ class RegistrationForm(forms.ModelForm):
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Repeat Password',
+            'autocomplete': 'new-password',
             'class': 'border border-gray-300 bg-white text-gray-900 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
         })
     )

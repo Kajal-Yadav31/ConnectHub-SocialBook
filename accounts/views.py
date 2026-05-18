@@ -55,6 +55,8 @@ def register(request):
 
 
 def login_user(request):
+    form = RegistrationForm() 
+
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -68,7 +70,12 @@ def login_user(request):
         else:
             messages.error(request, 'Please! Enter correct email and password')
             return redirect('login')
-    return render(request, 'accounts/register.html')
+        
+    context = {
+        'form': form
+    }
+
+    return render(request, 'accounts/register.html', context)
 
 
 @login_required(login_url='login')
